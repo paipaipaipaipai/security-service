@@ -8,15 +8,15 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 @MapperScan("org.potholes.mapper")
-public class PotholeApplication extends SpringBootServletInitializer {
+public class SecurityApplication extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(PotholeApplication.class);
+        return application.sources(SecurityApplication.class);
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(PotholeApplication.class, args);
+        SpringApplication.run(SecurityApplication.class, args);
     }
 
 }
