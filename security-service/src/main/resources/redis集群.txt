@@ -1,0 +1,69 @@
+wget http://download.redis.io/releases/redis-5.0.2.tar.gz
+tar -xf redis-5.0.2.tar.gz
+make clean
+make
+make install PREFIX=/usr/local/redis                     #指定安装目录
+
+
+========================== redis-7001.conf ==========================
+daemonize yes
+port 7001
+bind 192.168.99.99
+dir /usr/local/redis/cluster/7001/
+cluster-enabled yes
+cluster-config-file nodes-7001.conf
+cluster-node-timeout 5000
+pidfile /var/run/redis-7001.pid
+appendonly yes
+========================== redis-7001.conf ==========================
+
+
+
+
+./bin/redis-server ./redis.conf
+
+./bin/redis-server ./cluster/7001/redis-7001.conf
+./bin/redis-server ./cluster/7002/redis-7002.conf
+./bin/redis-server ./cluster/7003/redis-7003.conf
+./bin/redis-server ./cluster/7004/redis-7004.conf
+./bin/redis-server ./cluster/7005/redis-7005.conf
+./bin/redis-server ./cluster/7006/redis-7006.conf
+
+
+ps -ef|grep redis
+
+
+防火墙开放端口
+firewall-cmd --zone=public --add-port=7001/tcp --permanent
+firewall-cmd --zone=public --add-port=7002/tcp --permanent
+firewall-cmd --zone=public --add-port=7003/tcp --permanent
+firewall-cmd --zone=public --add-port=7004/tcp --permanent
+firewall-cmd --zone=public --add-port=7005/tcp --permanent
+firewall-cmd --zone=public --add-port=7006/tcp --permanent
+
+firewall-cmd --zone=public --add-port=8888/tcp --permanent
+firewall-cmd --zone=public --add-port=8889/tcp --permanent
+
+重启防火墙
+systemctl restart firewalld
+
+
+删除已有的记录
+rm ./7001/appendonly.aof ./7001/dump.rdb ./7001/nodes-7001.conf
+rm ./7002/appendonly.aof ./7002/dump.rdb ./7002/nodes-7002.conf
+rm ./7003/appendonly.aof ./7003/dump.rdb ./7003/nodes-7003.conf
+rm ./7004/appendonly.aof ./7004/dump.rdb ./7004/nodes-7004.conf
+rm ./7005/appendonly.aof ./7005/dump.rdb ./7005/nodes-7005.conf
+rm ./7006/appendonly.aof ./7006/dump.rdb ./7006/nodes-7006.conf 
+
+
+建立集群
+./bin/redis-cli --cluster create 192.168.99.99:7001 192.168.99.99:7002 192.168.99.99:7003 192.168.99.99:7004 192.168.99.99:7005 192.168.99.99:7006 --cluster-replicas 1
+
+
+远程连接redis
+./bin/redis-cli -h 192.168.99.99 -p 7001
+cluster info ：打印集群的信息
+cluster nodes ：列出集群当前已知的所有节点（ node），以及这些节点的相关信息。
+
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="false" debug="false" >
+	
+	<!-- app name -->
+    <property name="APP_NAME" value="security-service" />
+	<!-- log url -->
+	<Property name="LOG_HOME" value="${catalina.home}/logs/${APP_NAME}" />
+
+	<!-- log format -->
+	<contextName>${APP_NAME}</contextName>
+    <property name="LOG_FORMAT" value="%-5level [%contextName] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger - %msg%n" />
+
+	<!-- ConsoleAppender -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${LOG_FORMAT}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- DailyLog -->
+	<appender name="LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_HOME}/logs-%d{yyyy-MM-dd}.log</FileNamePattern>
+			<maxHistory>30</maxHistory>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${LOG_FORMAT}</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="LOG" />
+	</root>
+	
+</configuration>

@@ -1,0 +1,42 @@
+server:
+#  servlet:
+#    context-path: /pothole
+  port: 8888
+  tomcat: 
+    uri-encoding: UTF-8
+#  servlet:
+#    session:
+#      timeout: 60
+
+mybatis: 
+  mapperLocations: classpath:sqlmap/*.xml
+  typeAliasesPackage: org.potholes.model
+
+spring: 
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://119.119.118.49:3306/potholes?characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 12345
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 5000
+#    cluster:
+#      max-redirects: 5
+#      nodes: 192.168.99.99:7001,192.168.99.99:7002,192.168.99.99:7003,192.168.99.99:7004,192.168.99.99:7005,192.168.99.99:7006
+    jedis:
+      pool:
+        max-active: 10
+        max-wait: -1
+        max-idle: 10
+        min-idle: 0
+
+logging:
+  config: classpath:logback.xml
+
+global: 
+  userId: 12345
+  userName: admin
+

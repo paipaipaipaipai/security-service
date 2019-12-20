@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.potholes.mapper.RoleDAO">
+	<resultMap id="BaseResultMap" type="org.potholes.model.Role">
+		<id column="role_id" property="roleId" jdbcType="VARCHAR" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="role_alias" property="roleAlias" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		role_id, role_name, role_alias, status, create_date, update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		where role_id = #{roleId,jdbcType=VARCHAR}
+	</select>
+	<insert id="insert" parameterType="org.potholes.model.Role">
+		insert into sys_role (role_id, role_name, role_alias, status, create_date,
+		update_time )
+		values (#{roleId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleAlias,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP} )
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="org.potholes.model.Role">
+		update sys_role
+		set role_name = #{roleName,jdbcType=VARCHAR},
+		role_alias = #{roleAlias,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP}
+		where role_id = #{roleId,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByMenuId" resultType="org.potholes.model.Role" parameterType="java.lang.String">
+		SELECT
+			r.role_id AS roleId,
+			r.role_name AS roleName
+		FROM sys_role AS r
+		LEFT JOIN sys_role_menu AS m ON r.role_id = m.role_id
+		WHERE m.menu_id = #{menuId,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

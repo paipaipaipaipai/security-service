@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.potholes.mapper.MenuDAO">
+	<resultMap id="BaseResultMap" type="org.potholes.model.Menu">
+		<id column="menu_id" property="menuId" jdbcType="VARCHAR" />
+		<result column="menu_name" property="menuName" jdbcType="VARCHAR" />
+		<result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+		<result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+		<result column="menu_component" property="menuComponent" jdbcType="VARCHAR" />
+		<result column="menu_router" property="menuRouter" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		menu_id, menu_name, menu_icon, menu_url, menu_component, menu_router, status,
+		parent_id, create_date,
+		update_time
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from sys_menu
+		where menu_id = #{menuId,jdbcType=VARCHAR}
+	</select>
+	<insert id="insert" parameterType="org.potholes.model.Menu">
+		insert into sys_menu (menu_id, menu_name, menu_icon,
+		menu_url, menu_component, menu_router,
+		status, parent_id, create_date, update_time)
+		values (#{menuId,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, #{menuIcon,jdbcType=VARCHAR},
+		#{menuUrl,jdbcType=VARCHAR}, #{menuComponent,jdbcType=VARCHAR}, #{menuRouter,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="org.potholes.model.Menu">
+		update sys_menu
+		set menu_name = #{menuName,jdbcType=VARCHAR},
+		menu_icon = #{menuIcon,jdbcType=VARCHAR},
+		menu_url = #{menuUrl,jdbcType=VARCHAR},
+		menu_component = #{menuComponent,jdbcType=VARCHAR},
+		menu_router = #{menuRouter,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		parent_id = #{parentId,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP}
+		where menu_id = #{menuId,jdbcType=VARCHAR}
+	</update>
+	<select id="selectAllMenus" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from sys_menu
+		where status = #{status,jdbcType=VARCHAR}
+	</select>
+	
+	<resultMap id="SysMenuMap" type="org.potholes.api.sys.SysMenu">
+        <id column="menuId" property="menuId" jdbcType="VARCHAR"/>
+        <result column="menuName" property="menuName" jdbcType="VARCHAR"/>
+        <result column="menuIcon" property="menuIcon" jdbcType="VARCHAR"/>
+        <result column="menuComponent" property="menuComponent" jdbcType="VARCHAR"/>
+        <result column="menuRouter" property="menuRouter" jdbcType="VARCHAR"/>
+        <collection property="childMenus" ofType="org.potholes.api.sys.SysMenu">
+			<id column="menuId2" property="menuId" jdbcType="VARCHAR"/>
+	        <result column="menuName2" property="menuName" jdbcType="VARCHAR"/>
+	        <result column="menuIcon2" property="menuIcon" jdbcType="VARCHAR"/>
+	        <result column="menuComponent2" property="menuComponent" jdbcType="VARCHAR"/>
+	        <result column="menuRouter2" property="menuRouter" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+	<select id="getMenusByUser" resultMap="SysMenuMap" parameterType="java.lang.String">
+		SELECT
+			m1.menu_id AS menuId,
+			m1.menu_name AS menuName,
+			m1.menu_icon AS menuIcon,
+			m1.menu_component AS menuComponent,
+			m1.menu_router AS menuRouter,
+			m2.menu_id AS menuId2,
+			m2.menu_name AS menuName2,
+			m2.menu_icon AS menuIcon2,
+			m2.menu_component AS menuComponent2,
+			m2.menu_router AS menuRouter2
+		FROM sys_menu m1
+		INNER JOIN sys_menu m2 ON m1.menu_id = m2.parent_id
+		WHERE m2.menu_id IN(
+			SELECT m.menu_id 
+			FROM sys_user_role r
+			INNER JOIN sys_role_menu m ON r.role_id = m.role_id
+			WHERE r.user_id = #{userId,jdbcType=VARCHAR}
+		) AND m1.`status` = '1' AND m2.`status` = '1'
+	</select>
+	
+</mapper>
