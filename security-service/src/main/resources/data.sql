@@ -1,3 +1,4 @@
+
 -- ----------------------------
 -- Table structure for sys_menu
 -- ----------------------------
@@ -16,19 +17,25 @@ CREATE TABLE `sys_menu` (
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of sys_menu
+-- ----------------------------
+INSERT INTO `sys_menu` VALUES ('1', '系统管理', 'fa fa-windows', '/', 'Home', '/home', '1', null, '2019-11-27 10:23:28', '2019-11-27 10:23:28');
+INSERT INTO `sys_menu` VALUES ('2', '用户管理', null, '/system/**', 'system/User', '/sys/user', '1', '1', '2019-11-27 10:23:28', '2019-11-27 10:23:28');
+INSERT INTO `sys_menu` VALUES ('3', '测试', null, '/system/**', 'system/Hello', '/sys/hello', '1', '1', '2019-11-27 10:23:28', '2019-11-27 10:23:28');
 
 -- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
-  `id` varchar(100) NOT NULL,
+  `role_id` varchar(100) NOT NULL,
   `role_name` varchar(100) NOT NULL COMMENT '角色',
   `role_alias` varchar(100) NOT NULL COMMENT '别名',
   `status` varchar(2) NOT NULL COMMENT '状态; 1:启用;2:禁用',
   `create_date` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -50,6 +57,11 @@ CREATE TABLE `sys_role_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of sys_role_menu
+-- ----------------------------
+INSERT INTO `sys_role_menu` VALUES ('1', '1', '2', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
+INSERT INTO `sys_role_menu` VALUES ('2', '1', '3', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -66,6 +78,10 @@ CREATE TABLE `sys_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO `sys_user` VALUES ('1', 'admin', '13771234567', '$2a$10$v27SeU4hUCYOoBVYjdlOIuH9x5BQiJTKPJ6zjYqVFGHzVtjR3rjLi', '1', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -83,5 +99,4 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('1', '1', '1', '2019-09-09 10:14:40', '2019-09-09 10:14:42');
-INSERT INTO `sys_user_role` VALUES ('2', '2', '2', '2019-09-09 10:14:40', '2019-09-09 10:14:42');
+INSERT INTO `sys_user_role` VALUES ('1', '1', '1', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
