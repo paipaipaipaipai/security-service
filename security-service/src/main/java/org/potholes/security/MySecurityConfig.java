@@ -14,6 +14,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -70,9 +71,9 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
             }
         });
         // 登录
-        http.formLogin().loginPage("/checkLogin").loginProcessingUrl("/login").usernameParameter("username")
-                .passwordParameter("password").permitAll().successHandler(myAuthenticationSuccessHandler)
-                .failureHandler(myAuthenticationFailureHandler);
+        http.formLogin().loginPage("/checkLogin");
+        // 支持JSON方式登录
+        http.addFilterAt(myUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         // session 失效
         http.sessionManagement().invalidSessionStrategy(myInvalidSessionStrategy);
         // SESSION 过期(实现单用户单次登录)
@@ -85,12 +86,23 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
         // 取消跨站请求伪造防护
         http.cors().and().csrf().disable();
+
     }
 
     @Bean
     public SessionRegistry getSessionRegistry() {
         SessionRegistry sessionRegistry = new SessionRegistryImpl();
         return sessionRegistry;
+    }
+
+    @Bean
+    MyUsernamePasswordAuthenticationFilter myUsernamePasswordAuthenticationFilter() throws Exception {
+        MyUsernamePasswordAuthenticationFilter filter = new MyUsernamePasswordAuthenticationFilter();
+        filter.setAuthenticationSuccessHandler(myAuthenticationSuccessHandler);
+        filter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
+        filter.setFilterProcessesUrl("/login");
+        filter.setAuthenticationManager(authenticationManagerBean());
+        return filter;
     }
 
 }
