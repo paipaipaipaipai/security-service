@@ -8,11 +8,11 @@ public class User implements Serializable {
     /**
      * 
      */
-    private static final long serialVersionUID = 1356617050597158265L;
-
+    private static final long serialVersionUID = -2855248682707043298L;
     private String id;
     private String userName;
-    private String nickName;
+    private String userPhone;
+    private String realName;
     private String password;
     private String status;
     private Date createDate;
@@ -34,12 +34,20 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getUserPhone() {
+        return userPhone;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getPassword() {
@@ -72,15 +80,6 @@ public class User implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("User [id=").append(id).append(", userName=").append(userName).append(", nickName=")
-                .append(nickName).append(", password=").append(password).append(", status=").append(status)
-                .append(", createDate=").append(createDate).append(", updateTime=").append(updateTime).append("]");
-        return builder.toString();
     }
 
 }

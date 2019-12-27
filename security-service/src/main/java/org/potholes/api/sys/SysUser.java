@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.potholes.enums.StatusEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,11 +16,13 @@ public class SysUser implements UserDetails {
     /**
      * 
      */
-    private static final long serialVersionUID = 3013673643108877148L;
-
+    private static final long serialVersionUID = -1634525705385565610L;
     private String userId;
     private String userName;
+    private String realName;
     private String passWord;
+    @JsonIgnore
+    private String status;
     private List<SysRole> roles;
 
     public String getUserId() {
@@ -98,7 +101,23 @@ public class SysUser implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isEnabled() {
-        return true;
+        return StatusEnum.NORMAL.getType().equals(status) ? true : false;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -106,7 +125,9 @@ public class SysUser implements UserDetails {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((passWord == null) ? 0 : passWord.hashCode());
+        result = prime * result + ((realName == null) ? 0 : realName.hashCode());
         result = prime * result + ((roles == null) ? 0 : roles.hashCode());
+        result = prime * result + ((status == null) ? 0 : status.hashCode());
         result = prime * result + ((userId == null) ? 0 : userId.hashCode());
         result = prime * result + ((userName == null) ? 0 : userName.hashCode());
         return result;
@@ -126,10 +147,20 @@ public class SysUser implements UserDetails {
                 return false;
         } else if (!passWord.equals(other.passWord))
             return false;
+        if (realName == null) {
+            if (other.realName != null)
+                return false;
+        } else if (!realName.equals(other.realName))
+            return false;
         if (roles == null) {
             if (other.roles != null)
                 return false;
         } else if (!roles.equals(other.roles))
+            return false;
+        if (status == null) {
+            if (other.status != null)
+                return false;
+        } else if (!status.equals(other.status))
             return false;
         if (userId == null) {
             if (other.userId != null)
@@ -146,8 +177,8 @@ public class SysUser implements UserDetails {
 
     @Override
     public String toString() {
-        return "SysUser [userId=" + userId + ", userName=" + userName + ", passWord=" + passWord + ", roles=" + roles
-                + "]";
+        return "SysUser [userId=" + userId + ", userName=" + userName + ", realName=" + realName + ", passWord="
+                + passWord + ", status=" + status + ", roles=" + roles + "]";
     }
 
 }

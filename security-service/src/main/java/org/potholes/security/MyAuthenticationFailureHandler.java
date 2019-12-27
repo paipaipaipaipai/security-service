@@ -30,7 +30,7 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
         if (exception instanceof UsernameNotFoundException || exception instanceof BadCredentialsException) {
             out.write(JsonUtil.objectToJsonStr(ResponseUtils.buildErrorResponse("用户名或密码错误")));
         } else if (exception instanceof DisabledException) {
-            out.write(JsonUtil.objectToJsonStr(ResponseUtils.buildErrorResponse("账户被禁用")));
+            out.write(JsonUtil.objectToJsonStr(ResponseUtils.buildErrorResponse("账号已禁用")));
         } else {
             out.write(JsonUtil.objectToJsonStr(ResponseUtils.buildErrorResponse("操作失败")));
         }
