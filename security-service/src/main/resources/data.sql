@@ -21,8 +21,8 @@ CREATE TABLE `sys_menu` (
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES ('1', '系统管理', 'fa fa-windows', '/', 'Home', '/home', '1', null, '2019-11-27 10:23:28', '2019-11-27 10:23:28');
-INSERT INTO `sys_menu` VALUES ('2', '用户管理', null, '/system/**', 'system/User', '/sys/user', '1', '1', '2019-11-27 10:23:28', '2019-11-27 10:23:28');
-INSERT INTO `sys_menu` VALUES ('3', '测试', null, '/system/**', 'system/Hello', '/sys/hello', '1', '1', '2019-11-27 10:23:28', '2019-11-27 10:23:28');
+INSERT INTO `sys_menu` VALUES ('2', '用户管理', null, '/system/user/**', 'system/User', '/sys/user', '1', '1', '2019-11-27 10:23:28', '2019-11-27 10:23:28');
+INSERT INTO `sys_menu` VALUES ('3', '测试', null, '/system/test/**', 'system/Hello', '/sys/hello', '1', '1', '2019-11-27 10:23:28', '2019-11-27 10:23:28');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -71,6 +71,7 @@ CREATE TABLE `sys_user` (
   `id` varchar(100) NOT NULL,
   `user_name` varchar(100) NOT NULL COMMENT '姓名',
   `user_phone` varchar(100) NOT NULL COMMENT '手机号码',
+  `real_name` varchar(100) NOT NULL COMMENT '真实姓名',
   `password` varchar(100) NOT NULL COMMENT '密码',
   `status` varchar(2) NOT NULL COMMENT '状态; 1:启用;2:禁用',
   `create_date` datetime NOT NULL COMMENT '创建时间',
@@ -81,7 +82,8 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '13771234567', '$2a$10$v27SeU4hUCYOoBVYjdlOIuH9x5BQiJTKPJ6zjYqVFGHzVtjR3rjLi', '1', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
+INSERT INTO `sys_user` VALUES ('1', 'admin', '13771234567', '系统管理员', '$2a$10$v27SeU4hUCYOoBVYjdlOIuH9x5BQiJTKPJ6zjYqVFGHzVtjR3rjLi', '1', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
+INSERT INTO `sys_user` VALUES ('2', 'test', '13771234567', '测试账号', '$2a$10$v27SeU4hUCYOoBVYjdlOIuH9x5BQiJTKPJ6zjYqVFGHzVtjR3rjLi', '2', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
 
 -- ----------------------------
 -- Table structure for sys_user_role
