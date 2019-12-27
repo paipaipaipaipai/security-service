@@ -60,4 +60,29 @@
 		WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
 	</select>
 	
+	<select id="countUserByKeywords" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT COUNT(id) FROM sys_user
+		WHERE 1=1
+		<if test="keywords !=null and keywords !=''">
+			AND (
+				real_name LIKE CONCAT('%',#{keywords,jdbcType=VARCHAR},'%' ) 
+				OR user_phone LIKE CONCAT('%',#{keywords,jdbcType=VARCHAR},'%' )
+			)
+		</if>
+	</select>
+	
+	<select id="selectUserByKeywords" resultType="org.potholes.api.user.UserInfo" parameterType="java.util.Map">
+		SELECT id AS userId, user_name AS userName,real_name AS realName,
+			user_phone AS userPhone, `status`,create_date AS createDate
+		FROM sys_user
+		WHERE 1=1
+		<if test="keywords !=null and keywords !=''">
+			AND (
+				real_name LIKE CONCAT('%',#{keywords,jdbcType=VARCHAR},'%' ) 
+				OR user_phone LIKE CONCAT('%',#{keywords,jdbcType=VARCHAR},'%' )
+			)
+		</if>
+		ORDER BY create_date
+	</select>
+	
 </mapper>

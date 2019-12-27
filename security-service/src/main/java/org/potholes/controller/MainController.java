@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/***
+ * 登录即可用,不需要权限的接口
+ */
 @RestController
 public class MainController {
 
@@ -28,11 +31,6 @@ public class MainController {
     @RequestMapping("config/sysmenu")
     public ResponseData<List<SysMenu>> user(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return ResponseUtils.buildSuccessResponse(menuService.getMenusByUser());
-    }
-
-    @RequestMapping("system/hello")
-    public ResponseData<String> hello(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return ResponseUtils.buildSuccessResponse("Hello");
     }
 
 }

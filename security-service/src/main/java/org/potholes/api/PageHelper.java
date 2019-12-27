@@ -12,23 +12,23 @@ public class PageHelper implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    private Integer offset;
-    private Integer limit;
+    private Integer pageNo;
+    private Integer pageSize;
 
-    public Integer getOffset() {
-        return offset;
+    public Integer getPageNo() {
+        return pageNo;
     }
 
-    public void setOffset(Integer offset) {
-        this.offset = offset;
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
     }
 
-    public Integer getLimit() {
-        return limit;
+    public Integer getPageSize() {
+        return pageSize;
     }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 
 }
