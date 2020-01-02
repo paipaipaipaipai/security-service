@@ -10,6 +10,7 @@ import org.potholes.api.user.UserInfoReq;
 import org.potholes.api.user.UserSearchReq;
 import org.potholes.constants.GlobalConstants;
 import org.potholes.enums.StatusEnum;
+import org.potholes.exception.ServiceException;
 import org.potholes.mapper.UserDAO;
 import org.potholes.model.User;
 import org.potholes.utils.DateUtils;
@@ -63,6 +64,27 @@ public class UserService {
         user.setCreateDate(date);
         user.setUpdateTime(date);
         userDAO.insert(user);
+    }
+
+    @Transactional
+    public void deleteUser(UserInfoReq req) {
+        userDAO.deleteUserById(req.getUserId());
+    }
+
+    public UserInfo getUser(UserInfoReq req) {
+        User user = userDAO.selectByPrimaryKey(req.getUserId());
+        if (user == null) {
+            throw new ServiceException("用户不存在");
+        }
+        UserInfo ui = new UserInfo();
+        ui.setUserId(user.getId());
+        ui.setUserName(user.getUserName());
+        ui.setRealName(user.getRealName());
+        ui.setUserPhone(user.getUserPhone());
+        ui.setStatus(user.getStatus());
+        ui.setCreateDateStr(DateUtils.formatDate(user.getCreateDate(), DateUtils.SDF));
+        ui.setRoles(userDAO.selectRolesByUserId(req.getUserId()));
+        return ui;
     }
 
 }

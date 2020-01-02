@@ -41,5 +41,4 @@
 		LEFT JOIN sys_role_menu AS m ON r.role_id = m.role_id
 		WHERE m.menu_id = #{menuId,jdbcType=VARCHAR}
 	</select>
-
 </mapper>

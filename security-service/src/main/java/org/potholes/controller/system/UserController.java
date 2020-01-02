@@ -40,4 +40,17 @@ public class UserController {
         return ResponseUtils.buildSuccessResponse(null);
     }
 
+    @RequestMapping("deleteUser")
+    public ResponseData<String> deleteUser(HttpServletRequest request, HttpServletResponse response,
+            @RequestBody UserInfoReq req) throws Exception {
+        userService.deleteUser(req);
+        return ResponseUtils.buildSuccessResponse(null);
+    }
+
+    @RequestMapping("getUser")
+    public ResponseData<UserInfo> getUser(HttpServletRequest request, HttpServletResponse response,
+            @RequestBody UserInfoReq req) throws Exception {
+        return ResponseUtils.buildSuccessResponse(userService.getUser(req));
+    }
+
 }

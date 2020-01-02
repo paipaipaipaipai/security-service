@@ -60,8 +60,8 @@ CREATE TABLE `sys_role_menu` (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES ('1', '1', '2', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
-INSERT INTO `sys_role_menu` VALUES ('2', '1', '3', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
+INSERT INTO `sys_role_menu` VALUES ('1', '1', '2', NOW(), NOW());
+INSERT INTO `sys_role_menu` VALUES ('2', '1', '3', NOW(), NOW());
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -82,8 +82,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '13771234567', '系统管理员', '$2a$10$v27SeU4hUCYOoBVYjdlOIuH9x5BQiJTKPJ6zjYqVFGHzVtjR3rjLi', '1', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
-INSERT INTO `sys_user` VALUES ('2', 'test', '13771234567', '测试账号', '$2a$10$v27SeU4hUCYOoBVYjdlOIuH9x5BQiJTKPJ6zjYqVFGHzVtjR3rjLi', '2', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
+INSERT INTO `sys_user` VALUES ('admin', 'admin', '13771234567', '系统管理员', '$2a$10$v27SeU4hUCYOoBVYjdlOIuH9x5BQiJTKPJ6zjYqVFGHzVtjR3rjLi', '1', NOW(), NOW());
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -101,4 +100,4 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('1', '1', '1', '2019-11-27 10:20:08', '2019-11-27 10:20:08');
+INSERT INTO `sys_user_role` VALUES ('1', 'admin', '1', NOW(), NOW());

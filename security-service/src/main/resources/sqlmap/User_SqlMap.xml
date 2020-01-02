@@ -46,13 +46,11 @@
 		<result column="status" property="status" jdbcType="VARCHAR" />
         <collection property="roles" ofType="com.example.common.SysRole" select="getRolesByUserId" column="id"></collection>
     </resultMap>
-	
 	<select id="selectByUserName" resultMap="lazyLoadRoles" parameterType="java.lang.String">
 		SELECT id, user_name, real_name, password, status
 		FROM sys_user
 		WHERE user_name = #{userName,jdbcType=VARCHAR}
 	</select>
-
     <select id="getRolesByUserId" resultType="org.potholes.api.sys.SysRole"  parameterType="java.lang.String">
 		SELECT r.role_id AS roleId,r.role_name AS roleName,r.role_alias AS roleAlias
 		FROM sys_user_role AS ur
@@ -62,7 +60,7 @@
 	
 	<select id="countUserByKeywords" resultType="java.lang.Integer" parameterType="java.util.Map">
 		SELECT COUNT(id) FROM sys_user
-		WHERE 1=1
+		WHERE id <![CDATA[ <> ]]> 'admin'
 		<if test="keywords !=null and keywords !=''">
 			AND (
 				real_name LIKE CONCAT('%',#{keywords,jdbcType=VARCHAR},'%' ) 
@@ -70,12 +68,11 @@
 			)
 		</if>
 	</select>
-	
 	<select id="selectUserByKeywords" resultType="org.potholes.api.user.UserInfo" parameterType="java.util.Map">
 		SELECT id AS userId, user_name AS userName,real_name AS realName,
 			user_phone AS userPhone, `status`,create_date AS createDate
 		FROM sys_user
-		WHERE 1=1
+		WHERE id <![CDATA[ <> ]]> 'admin'
 		<if test="keywords !=null and keywords !=''">
 			AND (
 				real_name LIKE CONCAT('%',#{keywords,jdbcType=VARCHAR},'%' ) 
@@ -83,6 +80,17 @@
 			)
 		</if>
 		ORDER BY create_date
+	</select>
+	
+	<delete id="deleteUserById" parameterType="java.lang.String">
+        DELETE FROM sys_user where id = #{userId,jdbcType=VARCHAR}
+    </delete>
+    
+   	<select id="selectRolesByUserId" resultType="org.potholes.api.user.UserRole"  parameterType="java.lang.String">
+		SELECT r.role_id AS roleId,r.role_name AS roleName,r.role_alias AS roleAlias
+		FROM sys_user_role AS ur
+		LEFT JOIN sys_role AS r ON ur.role_id=r.role_id
+		WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
 	</select>
 	
 </mapper>
