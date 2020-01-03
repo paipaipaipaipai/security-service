@@ -9,6 +9,7 @@ import org.potholes.api.Pagination;
 import org.potholes.api.ResponseData;
 import org.potholes.api.user.UserInfo;
 import org.potholes.api.user.UserInfoReq;
+import org.potholes.api.user.UserRole;
 import org.potholes.api.user.UserSearchReq;
 import org.potholes.service.UserService;
 import org.potholes.utils.ResponseUtils;
@@ -47,10 +48,23 @@ public class UserController {
         return ResponseUtils.buildSuccessResponse(null);
     }
 
+    @RequestMapping("resetPassword")
+    public ResponseData<String> resetPassword(HttpServletRequest request, HttpServletResponse response,
+            @RequestBody UserInfoReq req) throws Exception {
+        userService.resetPassword(req);
+        return ResponseUtils.buildSuccessResponse(null);
+    }
+
     @RequestMapping("getUser")
     public ResponseData<UserInfo> getUser(HttpServletRequest request, HttpServletResponse response,
             @RequestBody UserInfoReq req) throws Exception {
         return ResponseUtils.buildSuccessResponse(userService.getUser(req));
+    }
+
+    @RequestMapping("getAllRoles")
+    public ResponseData<List<UserRole>> getAllRoles(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        return ResponseUtils.buildSuccessResponse(userService.getAllRoles());
     }
 
 }

@@ -41,4 +41,12 @@
 		LEFT JOIN sys_role_menu AS m ON r.role_id = m.role_id
 		WHERE m.menu_id = #{menuId,jdbcType=VARCHAR}
 	</select>
+	<select id="selectAllRoles" resultType="org.potholes.api.user.UserRole" parameterType="java.lang.String">
+		SELECT
+			role_id AS roleId,
+			role_name AS roleName,
+			role_alias AS roleAlias
+		FROM sys_role
+		ORDER BY create_date
+	</select>
 </mapper>
