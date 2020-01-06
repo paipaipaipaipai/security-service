@@ -8,7 +8,8 @@ public class User implements Serializable {
     /**
      * 
      */
-    private static final long serialVersionUID = -2855248682707043298L;
+    private static final long serialVersionUID = 1L;
+
     private String id;
     private String userName;
     private String userPhone;
@@ -17,6 +18,23 @@ public class User implements Serializable {
     private String status;
     private Date createDate;
     private Date updateTime;
+
+    public User() {
+        super();
+    }
+
+    public User(String id, String userName, String userPhone, String realName, String password, String status,
+            Date createDate, Date updateTime) {
+        super();
+        this.id = id;
+        this.userName = userName;
+        this.userPhone = userPhone;
+        this.realName = realName;
+        this.password = password;
+        this.status = status;
+        this.createDate = createDate;
+        this.updateTime = updateTime;
+    }
 
     public String getId() {
         return id;

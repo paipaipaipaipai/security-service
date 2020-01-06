@@ -9,7 +9,7 @@ import org.potholes.api.Pagination;
 import org.potholes.api.ResponseData;
 import org.potholes.api.user.UserInfo;
 import org.potholes.api.user.UserInfoReq;
-import org.potholes.api.user.UserRole;
+import org.potholes.api.user.RoleInfo;
 import org.potholes.api.user.UserSearchReq;
 import org.potholes.service.UserService;
 import org.potholes.utils.ResponseUtils;
@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @RequestMapping("getAllRoles")
-    public ResponseData<List<UserRole>> getAllRoles(HttpServletRequest request, HttpServletResponse response)
+    public ResponseData<List<RoleInfo>> getAllRoles(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         return ResponseUtils.buildSuccessResponse(userService.getAllRoles());
     }

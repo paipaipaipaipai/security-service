@@ -2,7 +2,7 @@ package org.potholes.mapper;
 
 import java.util.List;
 
-import org.potholes.api.user.UserRole;
+import org.potholes.api.user.RoleInfo;
 import org.potholes.model.Role;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +16,6 @@ public interface RoleDAO {
 
     List<Role> selectByMenuId(String menuId);
 
-    List<UserRole> selectAllRoles();
+    List<RoleInfo> selectAllRoles();
 
 }

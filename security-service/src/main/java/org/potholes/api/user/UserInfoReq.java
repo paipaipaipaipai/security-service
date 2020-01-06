@@ -3,8 +3,6 @@ package org.potholes.api.user;
 import java.io.Serializable;
 import java.util.List;
 
-import org.potholes.api.sys.SysRole;
-
 public class UserInfoReq implements Serializable {
 
     /**
@@ -17,7 +15,7 @@ public class UserInfoReq implements Serializable {
     private String userPhone;
     private String realName;
     private String status;
-    private List<SysRole> roles;
+    private List<RoleInfo> roles;
 
     public String getUserId() {
         return userId;
@@ -59,11 +57,11 @@ public class UserInfoReq implements Serializable {
         this.status = status;
     }
 
-    public List<SysRole> getRoles() {
+    public List<RoleInfo> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<SysRole> roles) {
+    public void setRoles(List<RoleInfo> roles) {
         this.roles = roles;
     }
 

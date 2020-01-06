@@ -86,7 +86,7 @@
         DELETE FROM sys_user where id = #{userId,jdbcType=VARCHAR}
     </delete>
     
-   	<select id="selectRolesByUserId" resultType="org.potholes.api.user.UserRole"  parameterType="java.lang.String">
+   	<select id="selectRolesByUserId" resultType="org.potholes.api.user.RoleInfo"  parameterType="java.lang.String">
 		SELECT r.role_id AS roleId,r.role_name AS roleName,r.role_alias AS roleAlias
 		FROM sys_user_role AS ur
 		LEFT JOIN sys_role AS r ON ur.role_id=r.role_id

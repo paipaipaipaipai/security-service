@@ -20,9 +20,9 @@ CREATE TABLE `sys_menu` (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1', '系统管理', 'fa fa-windows', '/', 'Home', '/home', '1', null, '2019-11-27 10:23:28', '2019-11-27 10:23:28');
-INSERT INTO `sys_menu` VALUES ('2', '用户管理', null, '/system/user/**', 'system/User', '/sys/user', '1', '1', '2019-11-27 10:23:28', '2019-11-27 10:23:28');
-INSERT INTO `sys_menu` VALUES ('3', '测试', null, '/system/test/**', 'system/Hello', '/sys/hello', '1', '1', '2019-11-27 10:23:28', '2019-11-27 10:23:28');
+INSERT INTO `sys_menu` VALUES ('1001', '系统管理', null, '/', 'Home', '/home', '1', null, NOW(), NOW());
+INSERT INTO `sys_menu` VALUES ('1001001', '用户管理', null, '/system/user/**', 'system/User', '/sys/user', '1', '1001', NOW(), NOW());
+INSERT INTO `sys_menu` VALUES ('1001002', '角色管理', null, '/system/role/**', 'system/Role', '/sys/role', '1', '1001', NOW(), NOW());
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -41,8 +41,7 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', 'ROLE_ADMIN', '管理员', '1', '2019-09-09 10:14:04', '2019-09-09 10:14:06');
-INSERT INTO `sys_role` VALUES ('2', 'ROLE_USER', '普通用户', '1', '2019-09-09 10:14:04', '2019-09-09 10:14:06');
+INSERT INTO `sys_role` VALUES ('admin', 'ROLE_ADMIN', '管理员', '1', NOW(), NOW());
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -60,8 +59,8 @@ CREATE TABLE `sys_role_menu` (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES ('1', '1', '2', NOW(), NOW());
-INSERT INTO `sys_role_menu` VALUES ('2', '1', '3', NOW(), NOW());
+INSERT INTO `sys_role_menu` VALUES (UUID(), 'admin', '1001001', NOW(), NOW());
+INSERT INTO `sys_role_menu` VALUES (UUID(), 'admin', '1001002', NOW(), NOW());
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -100,4 +99,4 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('1', 'admin', '1', NOW(), NOW());
+INSERT INTO `sys_user_role` VALUES (UUID(), 'admin', 'admin', NOW(), NOW());

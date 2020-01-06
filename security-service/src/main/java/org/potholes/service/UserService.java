@@ -6,16 +6,18 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.potholes.api.Pagination;
+import org.potholes.api.user.RoleInfo;
 import org.potholes.api.user.UserInfo;
 import org.potholes.api.user.UserInfoReq;
-import org.potholes.api.user.UserRole;
 import org.potholes.api.user.UserSearchReq;
 import org.potholes.constants.GlobalConstants;
 import org.potholes.enums.StatusEnum;
 import org.potholes.exception.ServiceException;
 import org.potholes.mapper.RoleDAO;
 import org.potholes.mapper.UserDAO;
+import org.potholes.mapper.UserRoleDAO;
 import org.potholes.model.User;
+import org.potholes.model.UserRole;
 import org.potholes.utils.DateUtils;
 import org.potholes.utils.PageUtil;
 import org.potholes.utils.UUIDUtil;
@@ -36,6 +38,8 @@ public class UserService {
     private UserDAO userDAO;
     @Autowired
     private RoleDAO roleDAO;
+    @Autowired
+    private UserRoleDAO userRoleDAO;
 
     public Pagination<List<UserInfo>> getUsers(UserSearchReq req) {
         List<UserInfo> result = new ArrayList<UserInfo>();
@@ -60,16 +64,16 @@ public class UserService {
             String userId = UUIDUtil.getId();
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             String password = encoder.encode(GlobalConstants.DEFAULT_PASSWORD);
-            User user = new User();
-            user.setId(userId);
-            user.setUserName(req.getUserName());
-            user.setRealName(req.getRealName());
-            user.setUserPhone(req.getUserPhone());
-            user.setPassword(password);
-            user.setStatus(req.getStatus());
-            user.setCreateDate(date);
-            user.setUpdateTime(date);
+            User user = new User(userId, req.getUserName(), req.getUserPhone(), req.getRealName(), password,
+                    req.getStatus(), date, date);
             userDAO.insert(user);
+            if (!CollectionUtils.isEmpty(req.getRoles())) {
+                List<UserRole> roles = new ArrayList<>();
+                for (RoleInfo role : req.getRoles()) {
+                    roles.add(new UserRole(UUIDUtil.getId(), userId, role.getRoleId(), date, date));
+                }
+                userRoleDAO.batchInsert(roles);
+            }
         } else {
             User u = userDAO.selectByPrimaryKey(req.getUserId());
             if (u == null) {
@@ -80,12 +84,21 @@ public class UserService {
             u.setStatus(req.getStatus());
             u.setUpdateTime(date);
             userDAO.updateByPrimaryKey(u);
+            userRoleDAO.deleteByUserId(req.getUserId());
+            if (!CollectionUtils.isEmpty(req.getRoles())) {
+                List<UserRole> roles = new ArrayList<>();
+                for (RoleInfo role : req.getRoles()) {
+                    roles.add(new UserRole(UUIDUtil.getId(), req.getUserId(), role.getRoleId(), date, date));
+                }
+                userRoleDAO.batchInsert(roles);
+            }
         }
     }
 
     @Transactional
     public void deleteUser(UserInfoReq req) {
         userDAO.deleteUserById(req.getUserId());
+        userRoleDAO.deleteByUserId(req.getUserId());
     }
 
     @Transactional
@@ -112,12 +125,11 @@ public class UserService {
         ui.setRealName(user.getRealName());
         ui.setUserPhone(user.getUserPhone());
         ui.setStatus(user.getStatus());
-        ui.setCreateDateStr(DateUtils.formatDate(user.getCreateDate(), DateUtils.SDF));
         ui.setRoles(userDAO.selectRolesByUserId(req.getUserId()));
         return ui;
     }
 
-    public List<UserRole> getAllRoles() {
+    public List<RoleInfo> getAllRoles() {
         return roleDAO.selectAllRoles();
     }
 

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.potholes.api.sys.SysUser;
 import org.potholes.api.user.UserInfo;
-import org.potholes.api.user.UserRole;
+import org.potholes.api.user.RoleInfo;
 import org.potholes.model.User;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +27,6 @@ public interface UserDAO {
 
     void deleteUserById(String userId);
 
-    List<UserRole> selectRolesByUserId(String userId);
+    List<RoleInfo> selectRolesByUserId(String userId);
 
 }

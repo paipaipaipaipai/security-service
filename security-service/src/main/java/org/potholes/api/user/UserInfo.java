@@ -18,7 +18,7 @@ public class UserInfo implements Serializable {
     private String status;
     private Date createDate;
     private String createDateStr;
-    private List<UserRole> roles;
+    private List<RoleInfo> roleInfos;
 
     public String getUserId() {
         return userId;
@@ -76,12 +76,12 @@ public class UserInfo implements Serializable {
         this.createDateStr = createDateStr;
     }
 
-    public List<UserRole> getRoles() {
-        return roles;
+    public List<RoleInfo> getRoles() {
+        return roleInfos;
     }
 
-    public void setRoles(List<UserRole> roles) {
-        this.roles = roles;
+    public void setRoles(List<RoleInfo> roleInfos) {
+        this.roleInfos = roleInfos;
     }
 
 }
