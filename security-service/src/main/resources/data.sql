@@ -35,7 +35,8 @@ CREATE TABLE `sys_role` (
   `status` varchar(2) NOT NULL COMMENT '状态; 1:启用;2:禁用',
   `create_date` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
-  PRIMARY KEY (`role_id`)
+  PRIMARY KEY (`role_id`),
+  UNIQUE KEY `unique_role_name` (`role_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -67,7 +68,7 @@ INSERT INTO `sys_role_menu` VALUES (UUID(), 'admin', '1001002', NOW(), NOW());
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
-  `id` varchar(100) NOT NULL,
+  `user_id` varchar(100) NOT NULL,
   `user_name` varchar(100) NOT NULL COMMENT '姓名',
   `user_phone` varchar(100) NOT NULL COMMENT '手机号码',
   `real_name` varchar(100) NOT NULL COMMENT '真实姓名',
@@ -75,7 +76,8 @@ CREATE TABLE `sys_user` (
   `status` varchar(2) NOT NULL COMMENT '状态; 1:启用;2:禁用',
   `create_date` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_user_name` (`user_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

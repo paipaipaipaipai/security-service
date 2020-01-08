@@ -8,7 +8,7 @@ public class Role implements Serializable {
     /**
      * 
      */
-    private static final long serialVersionUID = -916352114121073153L;
+    private static final long serialVersionUID = 1L;
 
     private String roleId;
 
@@ -21,6 +21,20 @@ public class Role implements Serializable {
     private Date createDate;
 
     private Date updateTime;
+
+    public Role() {
+        super();
+    }
+
+    public Role(String roleId, String roleName, String roleAlias, String status, Date createDate, Date updateTime) {
+        super();
+        this.roleId = roleId;
+        this.roleName = roleName;
+        this.roleAlias = roleAlias;
+        this.status = status;
+        this.createDate = createDate;
+        this.updateTime = updateTime;
+    }
 
     public String getRoleId() {
         return roleId;

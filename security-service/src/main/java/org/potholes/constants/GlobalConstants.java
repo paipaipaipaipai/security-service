@@ -12,4 +12,7 @@ public class GlobalConstants {
 
     public static final String DEFAULT_PASSWORD = "12345";
 
+    // Security 角色前缀
+    public static final String ROLENAME_PREFIX = "ROLE_";
+
 }

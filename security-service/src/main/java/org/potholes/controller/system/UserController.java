@@ -7,10 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.potholes.api.Pagination;
 import org.potholes.api.ResponseData;
-import org.potholes.api.user.UserInfo;
-import org.potholes.api.user.UserInfoReq;
-import org.potholes.api.user.RoleInfo;
-import org.potholes.api.user.UserSearchReq;
+import org.potholes.api.sys.UserInfo;
+import org.potholes.api.sys.UserInfoReq;
+import org.potholes.api.sys.UserSearchReq;
 import org.potholes.service.UserService;
 import org.potholes.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +58,6 @@ public class UserController {
     public ResponseData<UserInfo> getUser(HttpServletRequest request, HttpServletResponse response,
             @RequestBody UserInfoReq req) throws Exception {
         return ResponseUtils.buildSuccessResponse(userService.getUser(req));
-    }
-
-    @RequestMapping("getAllRoles")
-    public ResponseData<List<RoleInfo>> getAllRoles(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        return ResponseUtils.buildSuccessResponse(userService.getAllRoles());
     }
 
 }

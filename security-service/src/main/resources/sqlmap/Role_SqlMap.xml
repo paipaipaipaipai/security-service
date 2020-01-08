@@ -41,7 +41,7 @@
 		LEFT JOIN sys_role_menu AS m ON r.role_id = m.role_id
 		WHERE m.menu_id = #{menuId,jdbcType=VARCHAR}
 	</select>
-	<select id="selectAllRoles" resultType="org.potholes.api.user.RoleInfo" parameterType="java.lang.String">
+	<select id="selectAllRoles" resultType="org.potholes.api.sys.RoleInfo" parameterType="java.lang.String">
 		SELECT
 			role_id AS roleId,
 			role_name AS roleName,
@@ -49,4 +49,13 @@
 		FROM sys_role
 		ORDER BY create_date
 	</select>
+	<select id="selectByRoleName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		where role_name = #{roleName,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByRoleId" parameterType="java.lang.String">
+        DELETE FROM sys_role where role_id = #{roleId,jdbcType=VARCHAR}
+    </delete>
 </mapper>

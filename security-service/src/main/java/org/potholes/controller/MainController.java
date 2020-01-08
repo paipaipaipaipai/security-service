@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.potholes.api.ResponseData;
 import org.potholes.api.ResponseStatus;
+import org.potholes.api.sys.RoleInfo;
 import org.potholes.api.sys.SysMenu;
 import org.potholes.service.MenuService;
+import org.potholes.service.RoleService;
 import org.potholes.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,8 @@ public class MainController {
 
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private RoleService roleService;
 
     @RequestMapping("checkLogin")
     public ResponseData<String> checkLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -29,8 +33,15 @@ public class MainController {
     }
 
     @RequestMapping("config/sysmenu")
-    public ResponseData<List<SysMenu>> user(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ResponseData<List<SysMenu>> getSysmenu(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
         return ResponseUtils.buildSuccessResponse(menuService.getMenusByUser());
+    }
+
+    @RequestMapping("config/roles")
+    public ResponseData<List<RoleInfo>> getAllRoles(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        return ResponseUtils.buildSuccessResponse(roleService.getAllRoles());
     }
 
 }

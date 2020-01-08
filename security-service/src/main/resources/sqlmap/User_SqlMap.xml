@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.potholes.mapper.UserDAO">
 	<resultMap id="BaseResultMap" type="org.potholes.model.User">
-		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="user_id" property="userId" jdbcType="VARCHAR" />
 		<result column="user_name" property="userName" jdbcType="VARCHAR" />
 		<result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
 		<result column="real_name" property="realName" jdbcType="VARCHAR" />
@@ -12,7 +12,7 @@
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, user_name, user_phone, real_name, password, status, create_date, update_time
+		user_id, user_name, user_phone, real_name, password, status, create_date, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
@@ -21,8 +21,8 @@
 		where id = #{id,jdbcType=VARCHAR}
 	</select>
 	<insert id="insert" parameterType="org.potholes.model.User">
-		insert into sys_user (id, user_name, user_phone, real_name, password, status, create_date, update_time)
-		values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
+		insert into sys_user (user_id, user_name, user_phone, real_name, password, status, create_date, update_time)
+		values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
 		#{updateTime,jdbcType=TIMESTAMP})
 	</insert>
@@ -35,19 +35,19 @@
 		status = #{status,jdbcType=VARCHAR},
 		create_date = #{createDate,jdbcType=TIMESTAMP},
 		update_time = #{updateTime,jdbcType=TIMESTAMP}
-		where id = #{id,jdbcType=VARCHAR}
+		where user_id = #{userId,jdbcType=VARCHAR}
 	</update>
 	
 	<resultMap id="lazyLoadRoles" type="org.potholes.api.sys.SysUser">
-		<result column="id" property="userId" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
 		<result column="user_name" property="userName" jdbcType="VARCHAR" />
 		<result column="real_name" property="realName" jdbcType="VARCHAR" />
 		<result column="password" property="passWord" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="VARCHAR" />
-        <collection property="roles" ofType="com.example.common.SysRole" select="getRolesByUserId" column="id"></collection>
+        <collection property="roles" ofType="com.example.common.SysRole" select="getRolesByUserId" column="user_id"></collection>
     </resultMap>
 	<select id="selectByUserName" resultMap="lazyLoadRoles" parameterType="java.lang.String">
-		SELECT id, user_name, real_name, password, status
+		SELECT user_id, user_name, real_name, password, status
 		FROM sys_user
 		WHERE user_name = #{userName,jdbcType=VARCHAR}
 	</select>
@@ -57,10 +57,9 @@
 		LEFT JOIN sys_role AS r ON ur.role_id=r.role_id
 		WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
 	</select>
-	
 	<select id="countUserByKeywords" resultType="java.lang.Integer" parameterType="java.util.Map">
-		SELECT COUNT(id) FROM sys_user
-		WHERE id <![CDATA[ <> ]]> 'admin'
+		SELECT COUNT(user_id) FROM sys_user
+		WHERE user_id <![CDATA[ <> ]]> #{adminUserId,jdbcType=VARCHAR}
 		<if test="keywords !=null and keywords !=''">
 			AND (
 				real_name LIKE CONCAT('%',#{keywords,jdbcType=VARCHAR},'%' ) 
@@ -68,11 +67,11 @@
 			)
 		</if>
 	</select>
-	<select id="selectUserByKeywords" resultType="org.potholes.api.user.UserInfo" parameterType="java.util.Map">
-		SELECT id AS userId, user_name AS userName,real_name AS realName,
+	<select id="selectUserByKeywords" resultType="org.potholes.api.sys.UserInfo" parameterType="java.util.Map">
+		SELECT user_id AS userId, user_name AS userName,real_name AS realName,
 			user_phone AS userPhone, `status`,create_date AS createDate
 		FROM sys_user
-		WHERE id <![CDATA[ <> ]]> 'admin'
+		WHERE user_id <![CDATA[ <> ]]> #{adminUserId,jdbcType=VARCHAR}
 		<if test="keywords !=null and keywords !=''">
 			AND (
 				real_name LIKE CONCAT('%',#{keywords,jdbcType=VARCHAR},'%' ) 
@@ -81,12 +80,10 @@
 		</if>
 		ORDER BY create_date
 	</select>
-	
 	<delete id="deleteUserById" parameterType="java.lang.String">
-        DELETE FROM sys_user where id = #{userId,jdbcType=VARCHAR}
+        DELETE FROM sys_user where user_id = #{userId,jdbcType=VARCHAR}
     </delete>
-    
-   	<select id="selectRolesByUserId" resultType="org.potholes.api.user.RoleInfo"  parameterType="java.lang.String">
+   	<select id="selectRolesByUserId" resultType="org.potholes.api.sys.RoleInfo"  parameterType="java.lang.String">
 		SELECT r.role_id AS roleId,r.role_name AS roleName,r.role_alias AS roleAlias
 		FROM sys_user_role AS ur
 		LEFT JOIN sys_role AS r ON ur.role_id=r.role_id

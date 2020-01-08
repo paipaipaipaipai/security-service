@@ -37,6 +37,7 @@ logging:
   config: classpath:logback.xml
 
 global: 
-  userId: 12345
-  userName: admin
+  admin:
+    userId: admin
+    roleId: admin
 

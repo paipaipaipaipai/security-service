@@ -6,26 +6,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServerConfig {
 
-    @Value("${global.userId}")
-    private String userId;
+    @Value("${global.admin.userId}")
+    private String adminUserId;
 
-    @Value("${global.userName}")
-    private String userName;
+    @Value("${global.admin.roleId}")
+    private String adminRoleId;
 
-    public String getUserId() {
-        return userId;
+    public String getAdminUserId() {
+        return adminUserId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setAdminUserId(String adminUserId) {
+        this.adminUserId = adminUserId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getAdminRoleId() {
+        return adminRoleId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setAdminRoleId(String adminRoleId) {
+        this.adminRoleId = adminRoleId;
     }
 
 }

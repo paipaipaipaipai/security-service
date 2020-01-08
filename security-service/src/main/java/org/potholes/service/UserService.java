@@ -6,14 +6,14 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.potholes.api.Pagination;
-import org.potholes.api.user.RoleInfo;
-import org.potholes.api.user.UserInfo;
-import org.potholes.api.user.UserInfoReq;
-import org.potholes.api.user.UserSearchReq;
+import org.potholes.api.sys.RoleInfo;
+import org.potholes.api.sys.UserInfo;
+import org.potholes.api.sys.UserInfoReq;
+import org.potholes.api.sys.UserSearchReq;
 import org.potholes.constants.GlobalConstants;
+import org.potholes.constants.ServerConfig;
 import org.potholes.enums.StatusEnum;
 import org.potholes.exception.ServiceException;
-import org.potholes.mapper.RoleDAO;
 import org.potholes.mapper.UserDAO;
 import org.potholes.mapper.UserRoleDAO;
 import org.potholes.model.User;
@@ -37,15 +37,16 @@ public class UserService {
     @Autowired
     private UserDAO userDAO;
     @Autowired
-    private RoleDAO roleDAO;
-    @Autowired
     private UserRoleDAO userRoleDAO;
+    @Autowired
+    private ServerConfig serverConfig;
 
     public Pagination<List<UserInfo>> getUsers(UserSearchReq req) {
         List<UserInfo> result = new ArrayList<UserInfo>();
-        Integer total = userDAO.countUserByKeywords(req.getKeywords());
+        String adminUserId = serverConfig.getAdminUserId();
+        Integer total = userDAO.countUserByKeywords(req.getKeywords(), adminUserId);
         if (total >= 0) {
-            result = userDAO.selectUserByKeywords(req.getKeywords(),
+            result = userDAO.selectUserByKeywords(req.getKeywords(), adminUserId,
                     PageUtil.getRowBounds(req.getPageNo(), req.getPageSize()));
             if (!CollectionUtils.isEmpty(result)) {
                 for (UserInfo userInfo : result) {
@@ -120,17 +121,13 @@ public class UserService {
             throw new ServiceException("用户不存在");
         }
         UserInfo ui = new UserInfo();
-        ui.setUserId(user.getId());
+        ui.setUserId(user.getUserId());
         ui.setUserName(user.getUserName());
         ui.setRealName(user.getRealName());
         ui.setUserPhone(user.getUserPhone());
         ui.setStatus(user.getStatus());
         ui.setRoles(userDAO.selectRolesByUserId(req.getUserId()));
         return ui;
-    }
-
-    public List<RoleInfo> getAllRoles() {
-        return roleDAO.selectAllRoles();
     }
 
 }

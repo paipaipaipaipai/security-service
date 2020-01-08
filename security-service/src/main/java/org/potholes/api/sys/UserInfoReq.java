@@ -1,10 +1,9 @@
-package org.potholes.api.user;
+package org.potholes.api.sys;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
-public class UserInfo implements Serializable {
+public class UserInfoReq implements Serializable {
 
     /**
      * 
@@ -16,9 +15,7 @@ public class UserInfo implements Serializable {
     private String userPhone;
     private String realName;
     private String status;
-    private Date createDate;
-    private String createDateStr;
-    private List<RoleInfo> roleInfos;
+    private List<RoleInfo> roles;
 
     public String getUserId() {
         return userId;
@@ -60,28 +57,12 @@ public class UserInfo implements Serializable {
         this.status = status;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreateDateStr() {
-        return createDateStr;
-    }
-
-    public void setCreateDateStr(String createDateStr) {
-        this.createDateStr = createDateStr;
-    }
-
     public List<RoleInfo> getRoles() {
-        return roleInfos;
+        return roles;
     }
 
-    public void setRoles(List<RoleInfo> roleInfos) {
-        this.roleInfos = roleInfos;
+    public void setRoles(List<RoleInfo> roles) {
+        this.roles = roles;
     }
 
 }

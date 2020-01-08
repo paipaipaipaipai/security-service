@@ -1,8 +1,8 @@
-package org.potholes.api.user;
+package org.potholes.api.sys;
 
 import java.io.Serializable;
 
-public class RoleInfo implements Serializable {
+public class RoleInfoReq implements Serializable {
 
     /**
      * 
