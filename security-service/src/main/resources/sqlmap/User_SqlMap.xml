@@ -18,7 +18,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from sys_user
-		where id = #{id,jdbcType=VARCHAR}
+		where user_id = #{id,jdbcType=VARCHAR}
 	</select>
 	<insert id="insert" parameterType="org.potholes.model.User">
 		insert into sys_user (user_id, user_name, user_phone, real_name, password, status, create_date, update_time)
