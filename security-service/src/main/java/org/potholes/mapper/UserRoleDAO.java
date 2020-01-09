@@ -17,4 +17,5 @@ public interface UserRoleDAO {
 
     void deleteByUserId(String userId);
 
+    void deleteByRoleId(String roleId);
 }

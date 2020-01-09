@@ -10,6 +10,8 @@ import org.potholes.constants.ServerConfig;
 import org.potholes.enums.StatusEnum;
 import org.potholes.exception.ServiceException;
 import org.potholes.mapper.RoleDAO;
+import org.potholes.mapper.RoleMenuDAO;
+import org.potholes.mapper.UserRoleDAO;
 import org.potholes.model.Role;
 import org.potholes.utils.RegexUtils;
 import org.potholes.utils.UUIDUtil;
@@ -26,6 +28,10 @@ public class RoleService {
 
     @Autowired
     private RoleDAO roleDAO;
+    @Autowired
+    private RoleMenuDAO roleMenuDAO;
+    @Autowired
+    private UserRoleDAO userRoleDAO;
     @Autowired
     private ServerConfig serverConfig;
 
@@ -65,6 +71,7 @@ public class RoleService {
         roleDAO.updateByPrimaryKey(role);
     }
 
+    @Transactional
     public void deleteRole(RoleInfoReq req) {
         if (serverConfig.getAdminRoleId().equals(req.getRoleId())) {
             throw new ServiceException("管理员角色不允许删除");
@@ -74,6 +81,8 @@ public class RoleService {
             throw new ServiceException("角色不存在");
         }
         roleDAO.deleteByRoleId(req.getRoleId());
+        userRoleDAO.deleteByRoleId(req.getRoleId());
+        roleMenuDAO.deleteByRoleId(req.getRoleId());
     }
 
 }

@@ -11,4 +11,6 @@ public interface RoleMenuDAO {
 
     int updateByPrimaryKey(RoleMenu record);
 
+    void deleteByRoleId(String roleId);
+
 }

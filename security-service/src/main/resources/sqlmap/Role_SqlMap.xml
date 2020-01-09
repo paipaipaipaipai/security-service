@@ -37,8 +37,8 @@
 		SELECT
 			r.role_id AS roleId,
 			r.role_name AS roleName
-		FROM sys_role AS r
-		LEFT JOIN sys_role_menu AS m ON r.role_id = m.role_id
+		FROM sys_role_menu AS m
+		INNER JOIN sys_role AS r ON m.role_id = r.role_id
 		WHERE m.menu_id = #{menuId,jdbcType=VARCHAR}
 	</select>
 	<select id="selectAllRoles" resultType="org.potholes.api.sys.RoleInfo" parameterType="java.lang.String">

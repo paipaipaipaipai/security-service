@@ -42,4 +42,7 @@
 	<delete id="deleteByUserId" parameterType="java.lang.String">
         DELETE FROM sys_user_role where user_id = #{userId,jdbcType=VARCHAR}
     </delete>
+	<delete id="deleteByRoleId" parameterType="java.lang.String">
+        DELETE FROM sys_user_role where role_id = #{roleId,jdbcType=VARCHAR}
+    </delete>
 </mapper>
