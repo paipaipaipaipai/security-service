@@ -89,5 +89,10 @@
 		LEFT JOIN sys_role AS r ON ur.role_id=r.role_id
 		WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
 	</select>
-	
+	<select id="selectUserByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		where user_name = #{userName,jdbcType=VARCHAR}
+	</select>
 </mapper>

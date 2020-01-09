@@ -62,6 +62,10 @@ public class UserService {
     public void saveUser(UserInfoReq req) {
         Date date = new Date();
         if (StringUtils.isBlank(req.getUserId())) {
+            User u = userDAO.selectUserByUserName(req.getUserName());
+            if (u != null) {
+                throw new ServiceException("账号已存在");
+            }
             String userId = UUIDUtil.getId();
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             String password = encoder.encode(GlobalConstants.DEFAULT_PASSWORD);

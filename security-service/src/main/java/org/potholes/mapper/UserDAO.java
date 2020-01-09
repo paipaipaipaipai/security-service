@@ -30,4 +30,6 @@ public interface UserDAO {
 
     List<RoleInfo> selectRolesByUserId(String userId);
 
+    User selectUserByUserName(String userName);
+
 }
