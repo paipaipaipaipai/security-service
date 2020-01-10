@@ -50,7 +50,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from sys_menu
-		where status = #{status,jdbcType=VARCHAR}
+		where `status` = #{status,jdbcType=VARCHAR}
 	</select>
 	
 	<resultMap id="SysMenuMap" type="org.potholes.api.sys.SysMenu">
@@ -67,8 +67,7 @@
 	        <result column="menuRouter2" property="menuRouter" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
-
-	<select id="getMenusByUser" resultMap="SysMenuMap" parameterType="java.lang.String">
+	<select id="getMenusByUser" resultMap="SysMenuMap" parameterType="java.util.Map">
 		SELECT
 			m1.menu_id AS menuId,
 			m1.menu_name AS menuName,
@@ -87,7 +86,33 @@
 			FROM sys_user_role r
 			INNER JOIN sys_role_menu m ON r.role_id = m.role_id
 			WHERE r.user_id = #{userId,jdbcType=VARCHAR}
-		) AND m1.`status` = '1' AND m2.`status` = '1'
+		) AND m1.`status` = #{status,jdbcType=VARCHAR} AND m2.`status` = #{status,jdbcType=VARCHAR}
+	</select>
+	<select id="selectMenuIdsByRoleId" resultType="java.lang.String" parameterType="java.lang.String">
+		SELECT m.menu_id
+		FROM sys_role_menu rm
+		INNER JOIN sys_menu m ON rm.menu_id = m.menu_id
+		WHERE rm.role_id = #{roleId,jdbcType=VARCHAR}
+	</select>
+	
+	<resultMap id="MenuTreeMap" type="org.potholes.api.sys.MenuTree">
+        <id column="menuId" property="menuId" jdbcType="VARCHAR"/>
+        <result column="menuName" property="menuName" jdbcType="VARCHAR"/>
+        <collection property="childMenus" ofType="org.potholes.api.sys.MenuTree">
+			<id column="menuId2" property="menuId" jdbcType="VARCHAR"/>
+	        <result column="menuName2" property="menuName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+	
+	<select id="getMenuTree" resultMap="MenuTreeMap" parameterType="java.lang.String">
+		SELECT
+			m1.menu_id AS menuId,
+			m1.menu_name AS menuName,
+			m2.menu_id AS menuId2,
+			m2.menu_name AS menuName2
+		FROM sys_menu m1
+		INNER JOIN sys_menu m2 ON m1.menu_id = m2.parent_id
+		WHERE m1.`status` = #{status,jdbcType=VARCHAR} AND m2.`status` = #{status,jdbcType=VARCHAR}
 	</select>
 	
 </mapper>

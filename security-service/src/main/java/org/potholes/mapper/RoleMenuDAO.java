@@ -1,5 +1,7 @@
 package org.potholes.mapper;
 
+import java.util.List;
+
 import org.potholes.model.RoleMenu;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +14,7 @@ public interface RoleMenuDAO {
     int updateByPrimaryKey(RoleMenu record);
 
     void deleteByRoleId(String roleId);
+
+    int batchInsert(List<RoleMenu> roleMenus);
 
 }
