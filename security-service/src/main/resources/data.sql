@@ -20,9 +20,10 @@ CREATE TABLE `sys_menu` (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1001', '系统管理', null, '/', 'Home', '/', '1', null, NOW(), NOW());
+INSERT INTO `sys_menu` VALUES ('1001', '系统管理', null, '/', 'Index', '/index', '1', null, NOW(), NOW());
 INSERT INTO `sys_menu` VALUES ('1001001', '用户管理', null, '/system/user/**', 'system/User', '/sys/user', '1', '1001', NOW(), NOW());
 INSERT INTO `sys_menu` VALUES ('1001002', '角色管理', null, '/system/role/**', 'system/Role', '/sys/role', '1', '1001', NOW(), NOW());
+INSERT INTO `sys_menu` VALUES ('1001003', '权限管理', null, '/system/authority/**', 'system/Authority', '/sys/authority', '1', '1001', NOW(), NOW());
 
 -- ----------------------------
 -- Table structure for sys_role
