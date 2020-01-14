@@ -87,6 +87,7 @@
 			INNER JOIN sys_role_menu m ON r.role_id = m.role_id
 			WHERE r.user_id = #{userId,jdbcType=VARCHAR}
 		) AND m1.`status` = #{status,jdbcType=VARCHAR} AND m2.`status` = #{status,jdbcType=VARCHAR}
+		ORDER BY m1.menu_id,m2.menu_id
 	</select>
 	<select id="selectMenuIdsByRoleId" resultType="java.lang.String" parameterType="java.lang.String">
 		SELECT m.menu_id
