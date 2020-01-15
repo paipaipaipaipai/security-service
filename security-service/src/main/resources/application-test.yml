@@ -33,6 +33,11 @@ spring:
         max-idle: 10
         min-idle: 0
 
+# Session共享<redis--300秒>
+  session: 
+    store-type: redis
+    timeout: 300
+
 logging:
   config: classpath:logback.xml
 
