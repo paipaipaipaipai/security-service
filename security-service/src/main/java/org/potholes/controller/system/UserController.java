@@ -27,8 +27,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("getUsers")
-    public ResponseData<Pagination<List<UserInfo>>> getUsers(HttpServletRequest request, HttpServletResponse response,
+    @RequestMapping("allUsers")
+    public ResponseData<Pagination<List<UserInfo>>> allUsers(HttpServletRequest request, HttpServletResponse response,
             @RequestBody UserSearchReq req) throws Exception {
         return ResponseUtils.buildSuccessResponse(userService.getUsers(req));
     }
