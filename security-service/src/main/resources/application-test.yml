@@ -1,6 +1,6 @@
 server:
 #  servlet:
-#    context-path: /pothole
+#    context-path: /security-service
   port: 8888
   tomcat: 
     uri-encoding: UTF-8
@@ -37,6 +37,9 @@ spring:
   session: 
     store-type: redis
     timeout: 300
+    redis: 
+      namespace: security:session
+      flush-mode: on-save
 
 logging:
   config: classpath:logback.xml
