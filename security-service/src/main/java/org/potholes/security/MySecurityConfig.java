@@ -76,7 +76,8 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterAt(myUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         // session 失效
         http.sessionManagement().invalidSessionStrategy(myInvalidSessionStrategy);
-        // SESSION 过期(实现单用户单次登录)
+        // SESSION 过期(实现单用户单次登录) Session 共享之后会失效,需要重写sessionRegistry
+        // https://www.cnblogs.com/sweetchildomine/p/7007242.html
         http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry)
                 .expiredSessionStrategy(myExpiredSessionStrategy);
         // 注销

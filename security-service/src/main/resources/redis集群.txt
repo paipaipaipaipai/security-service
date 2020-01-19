@@ -40,21 +40,22 @@ firewall-cmd --zone=public --add-port=7003/tcp --permanent
 firewall-cmd --zone=public --add-port=7004/tcp --permanent
 firewall-cmd --zone=public --add-port=7005/tcp --permanent
 firewall-cmd --zone=public --add-port=7006/tcp --permanent
-
 firewall-cmd --zone=public --add-port=8888/tcp --permanent
 firewall-cmd --zone=public --add-port=8889/tcp --permanent
 
 重启防火墙
 systemctl restart firewalld
+关闭防火墙
+systemctl stop firewalld
+systemctl disable firewalld
 
-
-删除已有的记录
-rm ./7001/appendonly.aof ./7001/dump.rdb ./7001/nodes-7001.conf
-rm ./7002/appendonly.aof ./7002/dump.rdb ./7002/nodes-7002.conf
-rm ./7003/appendonly.aof ./7003/dump.rdb ./7003/nodes-7003.conf
-rm ./7004/appendonly.aof ./7004/dump.rdb ./7004/nodes-7004.conf
-rm ./7005/appendonly.aof ./7005/dump.rdb ./7005/nodes-7005.conf
-rm ./7006/appendonly.aof ./7006/dump.rdb ./7006/nodes-7006.conf 
+cluster目录 删除已有的记录   
+rm -f ./7001/appendonly.aof ./7001/dump.rdb ./7001/nodes-7001.conf
+rm -f ./7002/appendonly.aof ./7002/dump.rdb ./7002/nodes-7002.conf
+rm -f ./7003/appendonly.aof ./7003/dump.rdb ./7003/nodes-7003.conf
+rm -f ./7004/appendonly.aof ./7004/dump.rdb ./7004/nodes-7004.conf
+rm -f ./7005/appendonly.aof ./7005/dump.rdb ./7005/nodes-7005.conf
+rm -f ./7006/appendonly.aof ./7006/dump.rdb ./7006/nodes-7006.conf 
 
 
 建立集群
