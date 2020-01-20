@@ -77,7 +77,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         // session 失效
         http.sessionManagement().invalidSessionStrategy(myInvalidSessionStrategy);
         // SESSION 过期(实现单用户单次登录) Session 共享之后会失效,需要重写sessionRegistry
-        // https://www.cnblogs.com/sweetchildomine/p/7007242.html
+        // 相关代码见 Session共享管理登录
         http.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry)
                 .expiredSessionStrategy(myExpiredSessionStrategy);
         // 注销
