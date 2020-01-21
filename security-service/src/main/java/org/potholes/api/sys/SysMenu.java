@@ -3,17 +3,22 @@ package org.potholes.api.sys;
 import java.io.Serializable;
 import java.util.List;
 
+/***
+ * 菜单
+ */
 public class SysMenu implements Serializable {
 
     /**
      * 
      */
-    private static final long serialVersionUID = 3772186868259450147L;
+    private static final long serialVersionUID = 1L;
     private String menuId;
     private String menuName;
     private String menuIcon;
     private String menuComponent;
     private String menuRouter;
+    private String hidden;
+    private SysMenuMeta meta;
     private List<SysMenu> childMenus;
 
     public String getMenuId() {
@@ -62,6 +67,22 @@ public class SysMenu implements Serializable {
 
     public void setChildMenus(List<SysMenu> childMenus) {
         this.childMenus = childMenus;
+    }
+
+    public String getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(String hidden) {
+        this.hidden = hidden;
+    }
+
+    public SysMenuMeta getMeta() {
+        return meta;
+    }
+
+    public void setMeta(SysMenuMeta meta) {
+        this.meta = meta;
     }
 
 }

@@ -8,7 +8,7 @@ public class Menu implements Serializable {
     /**
      * 
      */
-    private static final long serialVersionUID = -8970844162292219255L;
+    private static final long serialVersionUID = 1L;
 
     private String menuId;
 
@@ -21,6 +21,10 @@ public class Menu implements Serializable {
     private String menuComponent;
 
     private String menuRouter;
+
+    private String hidden;
+
+    private String metaPath;
 
     private String status;
 
@@ -78,6 +82,22 @@ public class Menu implements Serializable {
         this.menuRouter = menuRouter;
     }
 
+    public String getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(String hidden) {
+        this.hidden = hidden;
+    }
+
+    public String getMetaPath() {
+        return metaPath;
+    }
+
+    public void setMetaPath(String metaPath) {
+        this.metaPath = metaPath;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -94,19 +114,20 @@ public class Menu implements Serializable {
         this.parentId = parentId;
     }
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
     public Date getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu [menuId=" + menuId + ", menuName=" + menuName + ", menuIcon=" + menuIcon + ", menuUrl=" + menuUrl
-                + ", menuComponent=" + menuComponent + ", menuRouter=" + menuRouter + ", status=" + status
-                + ", parentId=" + parentId + ", createDate=" + createDate + ", updateTime=" + updateTime + "]";
     }
 
 }
