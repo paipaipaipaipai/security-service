@@ -22,10 +22,6 @@ public class Menu implements Serializable {
 
     private String menuRouter;
 
-    private String hidden;
-
-    private String metaPath;
-
     private String status;
 
     private String parentId;
@@ -80,22 +76,6 @@ public class Menu implements Serializable {
 
     public void setMenuRouter(String menuRouter) {
         this.menuRouter = menuRouter;
-    }
-
-    public String getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(String hidden) {
-        this.hidden = hidden;
-    }
-
-    public String getMetaPath() {
-        return metaPath;
-    }
-
-    public void setMetaPath(String metaPath) {
-        this.metaPath = metaPath;
     }
 
     public String getStatus() {

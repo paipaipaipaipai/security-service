@@ -17,8 +17,6 @@ public class SysMenu implements Serializable {
     private String menuIcon;
     private String menuComponent;
     private String menuRouter;
-    private String hidden;
-    private SysMenuMeta meta;
     private List<SysMenu> childMenus;
 
     public String getMenuId() {
@@ -67,22 +65,6 @@ public class SysMenu implements Serializable {
 
     public void setChildMenus(List<SysMenu> childMenus) {
         this.childMenus = childMenus;
-    }
-
-    public String getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(String hidden) {
-        this.hidden = hidden;
-    }
-
-    public SysMenuMeta getMeta() {
-        return meta;
-    }
-
-    public void setMeta(SysMenuMeta meta) {
-        this.meta = meta;
     }
 
 }

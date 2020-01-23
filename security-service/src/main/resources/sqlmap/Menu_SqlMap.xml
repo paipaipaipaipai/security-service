@@ -8,8 +8,6 @@
 		<result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
 		<result column="menu_component" property="menuComponent" jdbcType="VARCHAR" />
 		<result column="menu_router" property="menuRouter" jdbcType="VARCHAR" />
-		<result column="hidden" property="hidden" jdbcType="VARCHAR" />
-		<result column="meta_path" property="metaPath" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="VARCHAR" />
 		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
 		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -17,7 +15,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		menu_id, menu_name, menu_icon, menu_url, menu_component, menu_router, 
-		hidden, meta_path, status, parent_id, create_date, update_time
+		status, parent_id, create_date, update_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
@@ -27,11 +25,11 @@
 	</select>
 	<insert id="insert" parameterType="org.potholes.model.Menu">
 		insert into sys_menu (menu_id, menu_name, menu_icon,
-		menu_url, menu_component, menu_router, hidden, meta_path,
+		menu_url, menu_component, menu_router,
 		status, parent_id, create_date, update_time)
 		values (#{menuId,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, #{menuIcon,jdbcType=VARCHAR},
 		#{menuUrl,jdbcType=VARCHAR}, #{menuComponent,jdbcType=VARCHAR}, #{menuRouter,jdbcType=VARCHAR},
-		#{hidden,jdbcType=VARCHAR}, #{metaPath,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR},
 		#{createDate,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="org.potholes.model.Menu">
@@ -41,8 +39,6 @@
 		menu_url = #{menuUrl,jdbcType=VARCHAR},
 		menu_component = #{menuComponent,jdbcType=VARCHAR},
 		menu_router = #{menuRouter,jdbcType=VARCHAR},
-		hidden = #{hidden,jdbcType=VARCHAR},
-		meta_path = #{metaPath,jdbcType=VARCHAR},
 		status = #{status,jdbcType=VARCHAR},
 		parent_id = #{parentId,jdbcType=VARCHAR},
 		create_date = #{createDate,jdbcType=TIMESTAMP},
@@ -62,20 +58,12 @@
         <result column="menuIcon" property="menuIcon" jdbcType="VARCHAR"/>
         <result column="menuComponent" property="menuComponent" jdbcType="VARCHAR"/>
         <result column="menuRouter" property="menuRouter" jdbcType="VARCHAR"/>
- 	    <result column="hidden" property="hidden" jdbcType="VARCHAR"/>
- 	    <association property="meta" javaType="org.potholes.api.sys.SysMenuMeta">
-        	<result column="metaPath" property="metaPath" jdbcType="VARCHAR"/>
-        </association>
         <collection property="childMenus" ofType="org.potholes.api.sys.SysMenu">
 			<id column="menuId2" property="menuId" jdbcType="VARCHAR"/>
 	        <result column="menuName2" property="menuName" jdbcType="VARCHAR"/>
 	        <result column="menuIcon2" property="menuIcon" jdbcType="VARCHAR"/>
 	        <result column="menuComponent2" property="menuComponent" jdbcType="VARCHAR"/>
 	        <result column="menuRouter2" property="menuRouter" jdbcType="VARCHAR"/>
-	        <result column="hidden2" property="hidden" jdbcType="VARCHAR"/>
-	        <association property="meta" javaType="org.potholes.api.sys.SysMenuMeta">
-        		<result column="metaPath2" property="metaPath" jdbcType="VARCHAR"/>
-        	</association>
         </collection>
     </resultMap>
 	<select id="getMenusByUser" resultMap="SysMenuMap" parameterType="java.util.Map">
@@ -85,15 +73,11 @@
 			m1.menu_icon AS menuIcon,
 			m1.menu_component AS menuComponent,
 			m1.menu_router AS menuRouter,
-			m1.hidden AS hidden,
-			m1.meta_path AS metaPath,
 			m2.menu_id AS menuId2,
 			m2.menu_name AS menuName2,
 			m2.menu_icon AS menuIcon2,
 			m2.menu_component AS menuComponent2,
-			m2.menu_router AS menuRouter2,
-			m2.hidden AS hidden2,
-			m2.meta_path AS metaPath2
+			m2.menu_router AS menuRouter2
 		FROM sys_menu m1
 		INNER JOIN sys_menu m2 ON m1.menu_id = m2.parent_id
 		WHERE m2.menu_id IN(
