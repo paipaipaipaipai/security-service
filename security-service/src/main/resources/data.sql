@@ -77,7 +77,7 @@ CREATE TABLE `sys_user` (
   `status` varchar(2) NOT NULL COMMENT '状态; 1:启用;2:禁用',
   `create_date` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`user_id`),
   UNIQUE KEY `unique_user_name` (`user_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
