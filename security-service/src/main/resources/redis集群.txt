@@ -1,5 +1,13 @@
+
+============ https://redis.io/download==============================
+$ wget http://download.redis.io/releases/redis-6.0.6.tar.gz
+$ tar -zxvf redis-6.0.6.tar.gz
+$ cd redis-6.0.6
+$ make
+
+
 wget http://download.redis.io/releases/redis-5.0.2.tar.gz
-tar -xf redis-5.0.2.tar.gz
+tar -zxvf redis-5.0.2.tar.gz
 make clean
 make
 make install PREFIX=/usr/local/redis                     #指定安装目录
