@@ -1,4 +1,8 @@
 
+#===================redis下载地址====================================
+http://download.redis.io/releases/
+#===================redis下载地址====================================
+
 ============ https://redis.io/download==============================
 $ wget http://download.redis.io/releases/redis-6.0.6.tar.gz
 $ tar -zxvf redis-6.0.6.tar.gz
